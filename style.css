@@ -46,10 +46,6 @@ body {
 	color: white;
 }
 
-.hero h1, h5, p {
-	text-shadow: var(--shadow);
-}
-
 .mynavbar {
 	background-color: rgba(255, 255, 255, 0.3) !important;
 	backdrop-filter: blur(4px);
