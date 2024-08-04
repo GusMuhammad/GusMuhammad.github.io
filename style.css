@@ -402,12 +402,17 @@ footer li {
     background-color: #f9f9f9;
 }
 
+.comment-box input,
 .comment-box textarea {
     width: 100%;
-    height: 100px;
     padding: 10px;
+    margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.comment-box textarea {
+    height: 100px;
     resize: vertical;
 }
 
@@ -425,7 +430,7 @@ footer li {
     background-color: #45a049;
 }
 
-.commentSection {
+#commentSection {
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
@@ -434,6 +439,7 @@ footer li {
     border-radius: 5px;
     background-color: #f9f9f9;
 }
+
 
 
 /*Media Query*/
