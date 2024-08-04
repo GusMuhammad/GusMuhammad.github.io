@@ -430,7 +430,7 @@ footer li {
     background-color: #45a049;
 }
 
-#commentSection {
+.comment-section {
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
