@@ -1,33 +1,38 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    loadComments();
+// script.js
+const firebaseConfig = {
+    apiKey: "AIzaSyCiZ2_1ysy6vZ_l0AmZGuYkjua34X66YS4",
+    authDomain: "gusmuhammad-c3540.firebaseapp.com",
+    databaseURL: "https://gusmuhammad-c3540-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "gusmuhammad-c3540",
+    storageBucket: "gusmuhammad-c3540.appspot.com",
+    messagingSenderId: "115098750707",
+    appId: "1:115098750707:web:67fe98fb2417442c8ff186"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const comment = document.getElementById('comment').value;
+    db.collection('comments').add({
+        text: comment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        document.getElementById('comment').value = '';
+        loadComments();
+    });
 });
 
-function addComment() {
-    var nameInput = document.getElementById('nameInput');
-    var commentInput = document.getElementById('commentInput');
-
-    if (nameInput.value.trim() !== "" && commentInput.value.trim() !== "") {
-        var newComment = {
-            name: nameInput.value,
-            comment: commentInput.value,
-            timestamp: Date.now()
-        };
-        // Simpan komentar ke Firebase
-        firebase.database().ref('comments').push(newComment);
-        nameInput.value = "";
-        commentInput.value = "";
-    }
-}
-
 function loadComments() {
-    var commentSection = document.getElementById('commentSection');
-    firebase.database().ref('comments').on('value', (snapshot) => {
-        commentSection.innerHTML = '<h3>Komentar:</h3>';
-        snapshot.forEach((childSnapshot) => {
-            var comment = childSnapshot.val();
-            var newComment = document.createElement('p');
-            newComment.innerHTML = `<strong>${comment.name}:</strong> ${comment.comment}`;
-            commentSection.appendChild(newComment);
+    db.collection('comments').orderBy('timestamp', 'desc').get().then((snapshot) => {
+        const commentsContainer = document.getElementById('commentsContainer');
+        commentsContainer.innerHTML = '';
+        snapshot.forEach((doc) => {
+            const comment = doc.data().text;
+            const commentElement = document.createElement('p');
+            commentElement.textContent = comment;
+            commentsContainer.appendChild(commentElement);
         });
     });
 }
